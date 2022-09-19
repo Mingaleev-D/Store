@@ -6,38 +6,56 @@
   android:layout_height="match_parent"
   tools:context=".ui.screen.home.HomeFragment">
 
-   <LinearLayout
+   <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+     android:id="@+id/swiper"
      android:layout_width="match_parent"
-     android:layout_height="match_parent"
-     android:orientation="vertical">
+     android:layout_height="match_parent">
 
-      <androidx.cardview.widget.CardView
+      <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="20dp">
+        android:layout_height="match_parent">
 
-         <com.denzcoskun.imageslider.ImageSlider
-           android:id="@+id/image_slider"
-           android:layout_width="wrap_content"
-           android:layout_height="180dp"
-           app:iss_auto_cycle="true"
-           app:iss_delay="0"
-           app:iss_period="1000"
-           app:layout_constraintEnd_toEndOf="parent"
-           app:layout_constraintStart_toStartOf="parent"
-           app:layout_constraintTop_toTopOf="parent" />
+         <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:orientation="vertical">
 
-      </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_margin="16dp"
+              app:cardBackgroundColor="@color/white"
+              app:cardCornerRadius="16dp"
+              app:cardElevation="20dp">
 
-      <androidx.recyclerview.widget.RecyclerView
-         android:id="@+id/rv_categories"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+               <com.denzcoskun.imageslider.ImageSlider
+                 android:id="@+id/image_slider"
+                 android:layout_width="wrap_content"
+                 android:layout_height="180dp"
+                 app:iss_auto_cycle="true"
+                 app:iss_delay="0"
+                 app:iss_period="1000"
+                 app:layout_constraintEnd_toEndOf="parent"
+                 app:layout_constraintStart_toStartOf="parent"
+                 app:layout_constraintTop_toTopOf="parent" />
 
-   </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.recyclerview.widget.RecyclerView
+              android:id="@+id/rv_categories"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content" />
+
+            <androidx.recyclerview.widget.RecyclerView
+              android:id="@+id/rv_products"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="8dp"
+              app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+         </LinearLayout>
+      </androidx.core.widget.NestedScrollView>
+   </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
 </FrameLayout>

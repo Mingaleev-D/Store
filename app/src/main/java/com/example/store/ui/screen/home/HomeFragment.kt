@@ -22,6 +22,7 @@ import com.example.store.model.OfferModel
 import com.example.store.network.Api
 import com.example.store.network.RetrofitInstance
 import com.example.store.ui.adapter.CategoryAdapter
+import com.example.store.ui.adapter.ProductAdapter
 import com.example.store.ui.screen.MainViewModel
 import com.example.store.util.Constants.BASE_URL
 import com.example.store.util.Constants.IMAGE_BASE
@@ -54,12 +55,21 @@ class HomeFragment : Fragment() {
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
 
+      binding.swiper.setOnRefreshListener {
+         loadData()
+      }
+
       binding.rvCategories.layoutManager =
          LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
 
       viewModel.error.observe(requireActivity(), Observer {
          Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
       })
+
+      viewModel.progress.observe(requireActivity(), Observer {
+         binding.swiper.isRefreshing = it
+      })
+
       viewModel.offersData.observe(requireActivity(), Observer {
          imageList.add(
             SlideModel(
@@ -85,12 +95,18 @@ class HomeFragment : Fragment() {
          binding.rvCategories.adapter =
             CategoryAdapter(it)
       })
+
+      viewModel.topProductsData.observe(requireActivity(), Observer {
+         binding.rvProducts.adapter = ProductAdapter(it)
+      })
+
       loadData()
 
    }
    fun loadData() {
       viewModel.getOffers()
       viewModel.getCategories()
+      viewModel.getTopProducts()
    }
 
    override fun onDestroy() {

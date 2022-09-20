@@ -32,5 +32,11 @@ class MainViewModel : ViewModel() {
    fun getTopProducts(){
       repository.getTopProducts(error,topProductsData)
    }
+   fun getByCategoriesProducts(id:Int){
+      repository.getByCategoriesProducts(id,error,topProductsData)
+   }
+   fun getProductsByIds(ids:List<Int>){
+      repository.getProductsByIds(ids,error,progress, topProductsData)
+   }
 
 }

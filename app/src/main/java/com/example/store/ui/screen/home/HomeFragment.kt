@@ -22,6 +22,7 @@ import com.example.store.model.OfferModel
 import com.example.store.network.Api
 import com.example.store.network.RetrofitInstance
 import com.example.store.ui.adapter.CategoryAdapter
+import com.example.store.ui.adapter.CategoryAdapterCallback
 import com.example.store.ui.adapter.ProductAdapter
 import com.example.store.ui.screen.MainViewModel
 import com.example.store.util.Constants.BASE_URL
@@ -31,93 +32,98 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 class HomeFragment : Fragment() {
-   private var mBinding: FragmentHomeBinding? = null
-   private val binding get() = mBinding!!
+  private var mBinding: FragmentHomeBinding? = null
+  private val binding get() = mBinding!!
 
-   private var imageList = ArrayList<SlideModel>()
+  private var imageList = ArrayList<SlideModel>()
 
-   lateinit var viewModel: MainViewModel
+  lateinit var viewModel: MainViewModel
 
-   override fun onCreate(savedInstanceState: Bundle?) {
-      super.onCreate(savedInstanceState)
-      viewModel = ViewModelProvider(this)[MainViewModel::class.java]
-   }
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    viewModel = ViewModelProvider(this)[MainViewModel::class.java]
+  }
 
-   override fun onCreateView(
-      inflater: LayoutInflater, container: ViewGroup?,
-      savedInstanceState: Bundle?
-   ): View {
-      mBinding = FragmentHomeBinding.inflate(inflater, container, false)
+  override fun onCreateView(
+    inflater: LayoutInflater, container: ViewGroup?,
+    savedInstanceState: Bundle?
+  ): View {
+    mBinding = FragmentHomeBinding.inflate(inflater, container, false)
 
-      return binding.root
-   }
+    return binding.root
+  }
 
-   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-      super.onViewCreated(view, savedInstanceState)
+  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    super.onViewCreated(view, savedInstanceState)
 
-      binding.swiper.setOnRefreshListener {
-         loadData()
-      }
-
-      binding.rvCategories.layoutManager =
-         LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
-
-      viewModel.error.observe(requireActivity(), Observer {
-         Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
-      })
-
-      viewModel.progress.observe(requireActivity(), Observer {
-         binding.swiper.isRefreshing = it
-      })
-
-      viewModel.offersData.observe(requireActivity(), Observer {
-         imageList.add(
-            SlideModel(
-               IMAGE_BASE + it[0].image,
-               ScaleTypes.CENTER_CROP
-            )
-         )
-         imageList.add(
-            SlideModel(
-               IMAGE_BASE + it[1].image,
-               ScaleTypes.CENTER_CROP
-            )
-         )
-         imageList.add(
-            SlideModel(
-               IMAGE_BASE + it[2].image,
-               ScaleTypes.CENTER_CROP
-            )
-         )
-         binding.imageSlider.setImageList(imageList, ScaleTypes.CENTER_CROP)
-      })
-      viewModel.categoriesData.observe(requireActivity(), Observer {
-         binding.rvCategories.adapter =
-            CategoryAdapter(it)
-      })
-
-      viewModel.topProductsData.observe(requireActivity(), Observer {
-         binding.rvProducts.adapter = ProductAdapter(it)
-      })
-
+    binding.swiper.setOnRefreshListener {
       loadData()
+    }
 
-   }
-   fun loadData() {
-      viewModel.getOffers()
-      viewModel.getCategories()
-      viewModel.getTopProducts()
-   }
+    binding.rvCategories.layoutManager =
+      LinearLayoutManager(requireActivity(), LinearLayoutManager.HORIZONTAL, false)
 
-   override fun onDestroy() {
-      super.onDestroy()
-      mBinding = null
-   }
+    viewModel.error.observe(requireActivity(), Observer {
+      Toast.makeText(requireActivity(), it, Toast.LENGTH_SHORT).show()
+    })
 
-   companion object {
-      @JvmStatic
-      fun newInstance() = HomeFragment()
-   }
+    viewModel.progress.observe(requireActivity(), Observer {
+      binding.swiper.isRefreshing = it
+    })
+
+    viewModel.offersData.observe(requireActivity(), Observer {
+      imageList.add(
+        SlideModel(
+          IMAGE_BASE + it[0].image,
+          ScaleTypes.CENTER_CROP
+        )
+      )
+      imageList.add(
+        SlideModel(
+          IMAGE_BASE + it[1].image,
+          ScaleTypes.CENTER_CROP
+        )
+      )
+      imageList.add(
+        SlideModel(
+          IMAGE_BASE + it[2].image,
+          ScaleTypes.CENTER_CROP
+        )
+      )
+      binding.imageSlider.setImageList(imageList, ScaleTypes.CENTER_CROP)
+    })
+    viewModel.categoriesData.observe(requireActivity(), Observer {
+      binding.rvCategories.adapter =
+        CategoryAdapter(it, object : CategoryAdapterCallback {
+          override fun onClickItem(item: CategoryModel) {
+            viewModel.getByCategoriesProducts(item.id)
+          }
+        })
+    })
+
+    viewModel.topProductsData.observe(requireActivity(), Observer {
+      binding.rvProducts.adapter = ProductAdapter(it)
+    })
+
+    loadData()
+
+  }
+
+  fun loadData() {
+    viewModel.getOffers()
+    viewModel.getCategories()
+    viewModel.getTopProducts()
+  }
+
+  override fun onDestroy() {
+    super.onDestroy()
+    mBinding = null
+  }
+
+  companion object {
+    @JvmStatic
+    fun newInstance() = HomeFragment()
+  }
 
 
 }

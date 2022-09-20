@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="#fff"
+  tools:context=".ui.screen.productdetail.ProductDetailActivity">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:orientation="horizontal">
+
+      <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_details_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardBackgroundColor="@color/purple_100"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp"
+        app:contentPadding="8dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+          android:layout_width="24dp"
+          android:layout_height="24dp"
+          android:src="@drawable/ic_left_arrow" />
+
+      </com.google.android.material.card.MaterialCardView>
+
+      <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_details_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:fontFamily="@font/arlrdbd"
+        android:gravity="center"
+        android:maxLines="1"
+        android:text="@string/no_text"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+      <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_details_favorites"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardBackgroundColor="@color/purple_100"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp"
+        app:contentPadding="8dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+          android:id="@+id/img_det_favorites"
+          android:layout_width="24dp"
+          android:layout_height="24dp"
+          android:src="@drawable/ic_heart_favotite"
+          app:tint="@color/red" />
+
+      </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      android:layout_weight="1"
+      android:background="@color/purple_100">
+
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="16dp"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatImageView
+          android:id="@+id/img_det_products"
+          android:layout_width="match_parent"
+          android:layout_height="250dp"
+          android:src="@drawable/ic_error" />
+
+        <com.google.android.material.textview.MaterialTextView
+          android:id="@+id/tv_products_name"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="16dp"
+          android:fontFamily="@font/arlrdbd"
+          android:text="@string/title"
+          android:textColor="@color/black"
+          android:textSize="20sp"
+          android:textStyle="bold" />
+
+        <com.google.android.material.textview.MaterialTextView
+          android:id="@+id/tv_product_comm"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="8dp"
+          android:fontFamily="@font/arial_rounded_mt_regular"
+          android:text="description"
+          android:textColor="@color/gray"
+          android:textSize="20sp"
+          android:textStyle="normal" />
+      </LinearLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+    <View
+      android:layout_width="match_parent"
+      android:layout_height="1px"
+      android:background="@color/purple_100" />
+
+    <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:orientation="horizontal"
+      android:padding="12dp">
+
+      <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_price_product"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:fontFamily="@font/arlrdbd"
+        android:text="10.0 $"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+      <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_add_to_bag"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:text="Add to bag"
+        app:cornerRadius="20dp" />
+
+
+    </LinearLayout>
+
+  </LinearLayout>
+
+</FrameLayout>

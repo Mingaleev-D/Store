@@ -1,9 +1,11 @@
 package com.example.store.model
 
-data class TopProductsModel(
-   val id:Int,
-   val name:String,
-   val price:String,
-   val image:String
+import java.io.Serializable
 
-)
+data class TopProductsModel(
+  val id: Int,
+  val name: String,
+  val price: String,
+  val image: String,
+  val bagCount: Int
+) : Serializable

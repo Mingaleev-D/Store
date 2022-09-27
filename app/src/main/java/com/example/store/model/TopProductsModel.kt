@@ -7,5 +7,5 @@ data class TopProductsModel(
   val name: String,
   val price: String,
   val image: String,
-  val bagCount: Int
+  var bagCount: Int
 ) : Serializable
